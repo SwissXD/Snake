@@ -5,8 +5,12 @@
 // Data: 13.12.2016
 //--------------------------
 
+#include <cstdlib>
 #include <iostream>
+#include <ctime>
 #include <vector>
+
+Block Pixles[50][50];
 
 struct Point
 {
@@ -28,17 +32,16 @@ struct Block
     {}
 };
 
-Block Pixles[50][50];
-
 class Snake
 {
     private:
         std::vector<Point> Positionen;
+        std::vector<Point> FoodPos;
 
     public:
         Snake(unsigned PixelsX, unsigned PixelsY)
         {
-            if(PixelsX > 10 && PixelsY >3)
+            if(PixelsX > 10 && PixelsY > 3)
             {
                 for(std::size_t i = 0; i < 6; ++i)
                 {
@@ -81,6 +84,16 @@ class Snake
                 return;
             }
 
+            //grow
+            if(this->FoodPos.size() > 0)
+            {
+                if(this->FoodPos[0] == this->Positionen[this->Positionen.size()-1])
+                {
+                    this->Positionen.push_back(this->FoodPos[0]);
+                    this->FoodPos.erase(this->FoodPos.begin());
+                }
+            }
+
             for(std::size_t i = 1; i < this->Positionen.size(); ++i)
             {
                 Point temp = this->Positionen[i];
@@ -103,4 +116,33 @@ class Snake
         {
             return this->Positionen[0];
         }
+
+        std::vector<Point> GetSnakePoints()
+        {
+            return this->Positionen;
+        }
+
+        void eat()
+        {
+            this->FoodPos.push_back(this->Positionen[0]);
+        }
 };
+
+Point GetRandomEmptyBlock()
+{
+    std::srand(std::time(0));
+    std::vector EmptyPoints;
+    for(std::size_t x = 0; x < 50; ++x)
+    {
+        for(std::size_t y = 0; y < 50; ++y)
+        {
+            if(Pixles[x][y] == Block::Empty)
+            {
+                Point temp(x,y);
+                EmptyPoints.push_back(Point);
+            }
+        }
+    }
+    unsigned random = std::rand%(EmptyPoints.size()-1);
+    return EmptyPoints[random];
+}
