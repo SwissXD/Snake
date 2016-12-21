@@ -5,7 +5,7 @@
 // Data: 13.12.2016
 //--------------------------
 
-#include Snake.hpp
+#include "Snake.hpp"
 
 int main()
 {
@@ -15,7 +15,6 @@ int main()
     {
         for(std::size_t y = 0; y < 50; ++y)
         {
-            std::vector<Point>
         }
     }
 }
