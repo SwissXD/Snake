@@ -6,13 +6,13 @@
 //--------------------------
 #include "Snake.hpp"
 
-Snake::Snake(unsigned PixelsX, unsigned PixelsY)
+Snake::Snake(unsigned asdf, unsigned fdas)
 {
-    if(PixelsX > 10 && PixelsY > 3)
+    if(asdf > 10 && fdas > 3)
     {
         for(std::size_t i = 0; i < 6; ++i)
         {
-            Point Temp((PixelsX/2)-(2+i),PixelsY/2);
+            Point Temp((asdf/2)-(2+i),fdas/2);
             this->Positionen.push_back(Temp);
         }
     }
@@ -102,7 +102,7 @@ Point GetRandomEmptyBlock()
     {
         for(std::size_t y = 0; y < 50; ++y)
         {
-            if(Pixels[x][y].Empty == true)
+            if(Pixel[x][y].Empty == true)
             {
                 Point temp(x,y);
                 EmptyPoints.push_back(temp);

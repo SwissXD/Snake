@@ -38,11 +38,11 @@ struct Block
     {}
 };
 
-Block Pixels[50][50];
+Block Pixel[50][50];
 
 class Snake
 {
-    private:
+    public:
         std::vector<Point> Positionen;
         std::vector<Point> FoodPos;
 
