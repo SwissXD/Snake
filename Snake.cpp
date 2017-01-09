@@ -6,7 +6,7 @@
 //--------------------------
 #include "Snake.hpp"
 
-Snake::Snake(unsigned asdf, unsigned fdas)
+/*Snake::Snake(unsigned asdf, unsigned fdas)
 {
     if(asdf > 10 && fdas > 3)
     {
@@ -111,4 +111,4 @@ Point GetRandomEmptyBlock()
     }
     int random = std::rand()%(EmptyPoints.size()-1);
     return EmptyPoints[random];
-}
+}*/

@@ -5,54 +5,85 @@
 // Data: 13.12.2016
 //--------------------------
 
+#include <algorithm>
 #include <cstdlib>
-#include <iostream>
-#include <ctime>
-#include <vector>
-
-
+#include <ostream>
+#include <array>
+#include <cassert>
+#include <random>
 
 struct Point
 {
-    unsigned x;
-    unsigned y;
-    Point(unsigned X, unsigned Y): x(X),y(Y)
+    std::size_t x;
+    std::size_t y;
+    Point(std::size_t X, std::size_t Y): x(X),y(Y)
     {}
-    Point(): x(0),y(0)
+    Point(): Point{ 0, 0 }
     {}
-
-    bool operator== (Point const& Rhs) const
-    {
-        return this->x == Rhs.x && this->y == Rhs.y;
-    }
 };
 
-
-struct Block
+inline bool operator== (Point const& Lhs, Point const& Rhs)
 {
-    bool SnakeHead;
-    bool SnakeBody;
-    bool Food;
-    bool Empty;
-    Block():SnakeHead(false),SnakeBody(false),Food(false),Empty(true)
-    {}
-};
-
-Block Pixel[50][50];
-
-class Snake
+	return Lhs.x == Rhs.x && Lhs.y == Rhs.y;
+}
+inline bool operator!= (Point const& Lhs, Point const& Rhs)
 {
-    public:
-        std::vector<Point> Positionen;
-        std::vector<Point> FoodPos;
+	return !(Lhs == Rhs);
+}
 
-    public:
-        Snake(unsigned, unsigned);
-        void Move(char);
-        bool Collision();
-        Point GetSnakeHead();
-        std::vector<Point> GetSnakePoints();
-        void eat();
+enum class Cardinals
+{
+	Top,
+	Right,
+	Bottom,
+	Left
 };
 
-Point GetRandomEmptyBlock();
+struct Snake
+{
+	std::vector<Point> Parts;
+	Cardinals Direction;
+
+	bool Propagate()
+	{
+
+	}
+};
+
+class Game
+{
+	enum
+	{
+		mWidth = 50,
+		mHeight = 50,
+	};
+
+	Snake snake;
+
+	std::minstd_rand mEngine{ std::random_device{}() };
+	std::uniform_int_distribution<std::size_t> mXDist{ 0, mWidth - 1 };
+	std::uniform_int_distribution<std::size_t> mYDist{ 0, mHeight - 1 };
+	Point Food;
+
+protected:
+	void GenerateFood()
+	{
+		for (;;)
+		{
+			Food.x = mXDist(mEngine);
+			Food.y = mYDist(mEngine);
+			if (std::find(std::begin(snake.Parts), std::end(snake.Parts), Food) == std::end(snake.Parts))
+				break;
+		}
+	}
+
+public:
+	Game()
+	{
+		for (std::size_t i = 0; i < 5; ++i)
+			snake.Parts.emplace_back(mWidth / 2 - i, mHeight / 2);
+		snake.Direction = Cardinals::Right;
+
+		GenerateFood();
+	}
+};

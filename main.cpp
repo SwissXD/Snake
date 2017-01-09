@@ -7,9 +7,14 @@
 
 #include "Snake.hpp"
 
+#include <iostream>
+
 int main()
 {
-    Snake mySnake(50,50);
+	Snake Game;
+	std::cout << Game;
+
+   /* Snake mySnake(50,50);
 
     unsigned i = 0;
     for(std::size_t x = 0; x < 50; ++x)
@@ -32,5 +37,5 @@ int main()
     }
 
     Point food = GetRandomEmptyBlock();
-    Pixel[food.x][food.y] = Block::Food;
+    Pixel[food.x][food.y] = Block::Food;*/
 }
